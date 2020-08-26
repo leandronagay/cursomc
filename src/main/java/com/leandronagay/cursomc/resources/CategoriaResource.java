@@ -17,6 +17,7 @@ import com.leandronagay.cursomc.services.CategoriaService;
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
+	
 	@Autowired
 	private CategoriaService service;
 	
