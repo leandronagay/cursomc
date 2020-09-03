@@ -13,6 +13,7 @@ import com.leandronagay.cursomc.domain.Cidade;
 import com.leandronagay.cursomc.domain.Cliente;
 import com.leandronagay.cursomc.domain.Endereco;
 import com.leandronagay.cursomc.domain.Estado;
+import com.leandronagay.cursomc.domain.ItemPedido;
 import com.leandronagay.cursomc.domain.Pagamento;
 import com.leandronagay.cursomc.domain.PagamentoComBoleto;
 import com.leandronagay.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.leandronagay.cursomc.repositories.CidadeRepository;
 import com.leandronagay.cursomc.repositories.ClienteRepository;
 import com.leandronagay.cursomc.repositories.EnderecoRepository;
 import com.leandronagay.cursomc.repositories.EstadoRepository;
+import com.leandronagay.cursomc.repositories.ItemPedidoRepository;
 import com.leandronagay.cursomc.repositories.PagamentoRepository;
 import com.leandronagay.cursomc.repositories.PedidoRepository;
 import com.leandronagay.cursomc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository ItemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -112,7 +116,18 @@ public class CursomcApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped2, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
 		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		ItemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 	
